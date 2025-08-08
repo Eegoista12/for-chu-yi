@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Digital Scrapbook for My GF</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff0f6;
+      margin: 0;
+      padding: 0 20px 40px;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      padding: 30px 10px 10px;
+      color: #b83280;
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: 'Brush Script MT', cursive;
+    }
+    #scrapbook {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(184, 50, 128, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    .item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(184, 50, 128, 0.35);
+    }
+    .item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .note {
+      padding: 15px 12px;
+      font-size: 1rem;
+      line-height: 1.3;
+      color: #641e41;
+      background: #fce4ec;
+      flex-grow: 1;
+    }
+    form {
+      margin: 40px auto 0;
+      max-width: 600px;
+      background: #fde6f0;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(184, 50, 128, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    form label {
+      font-weight: 600;
+      color: #b83280;
+    }
+    form input[type="text"] {
+      padding: 10px;
+      border: 2px solid #b83280;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    form button {
+      background: #b83280;
+      color: white;
+      font-weight: 700;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #8a235f;
+    }
+    @media (max-width: 480px) {
+      header {
+        font-size: 2rem;
+      }
+      form {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>My Love's Digital Scrapbook 💖</header>
+
+  <section id="scrapbook">
+    <!-- Scrapbook items will go here -->
+  </section>
+
+  <form id="addItemForm">
+    <label for="imageUrl">Photo URL:</label>
+    <input type="text" id="imageUrl" placeholder="Paste a photo URL here" required />
+
+    <label for="noteText">Note or Memory:</label>
+    <input type="text" id="noteText" placeholder="Write a sweet note or memory" required />
+
+    <button type="submit">Add to Scrapbook</button>
+  </form>
+
+  <script>
+    const scrapbook = document.getElementById('scrapbook');
+    const form = document.getElementById('addItemForm');
+    const imageUrlInput = document.getElementById('imageUrl');
+    const noteTextInput = document.getElementById('noteText');
+
+    // Example starting items
+    const items = [
+      {
+        img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
+        note: 'Our first trip together 🏞️'
+      },
+      {
+        img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80',
+        note: 'That rainy day we stayed in and laughed 🌧️'
+      }
+    ];
+
+    function renderItems() {
+      scrapbook.innerHTML = '';
+      items.forEach(({ img, note }) => {
+        const itemEl = document.createElement('div');
+        itemEl.classList.add('item');
+        itemEl.innerHTML = `
+          <img src="${img}" alt="Scrapbook photo" />
+          <div class="note">${note}</div>
+        `;
+        scrapbook.appendChild(itemEl);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const img = imageUrlInput.value.trim();
+      const note = noteTextInput.value.trim();
+      if (img && note) {
+        items.push({ img, note });
+        renderItems();
+        form.reset();
+      }
+    });
+
+    // Initial render
+    renderItems();
+  </script>
+
+</body>
+</html>
